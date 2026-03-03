@@ -1,0 +1,63 @@
+package br.edu.ifsp.list02;
+
+import java.util.Scanner;
+
+/*
+    Você está de volta em seu hotel na Tailândia depois de um dia de mergulhos. O seu quarto tem duas lâmpadas, chamadas
+    de A e B. No hotel há dois interruptores, que chamaremos de C1 e C2. Ao apertar C1, a lâmpada A acende se estiver
+    apagada, e apaga se estiver acesa. Se apertar C2, cada uma das lâmpadas A e a B troca de estado: se estiver apagada,
+    fica acesa e se estiver acesa apaga.
+
+    Você chegou no hotel e encontrou as lâmpadas em um determinado estado, como foram deixadas por seu amigo. Vamos chamar
+    o estado inicial da lâmpada A de IA e o estado inicial da lâmpada B de IB. Você gostaria de deixar as lâmpadas em uma
+    certa configuração final, que chamaremos de FA e FB, respectivamente, apertando os interruptores a menor quantidade de
+    vezes possível. Por exemplo, se as duas lâmpadas começam apagadas, e você quer que apenas a lâmpada A termine acesa,
+    basta apertar o interruptor C1.
+
+    Faça um programa que leia os estados iniciais IA e IB e os estados finais desejados FA e FB das duas lâmpadas.
+    Os valores de IA, IB, FA e FB são lidos na mesma linha nessa ordem. Seus valores possíveis são 0, se a lâmpada estiver
+    apagada e 1 caso contrário. Ao final, seu programa deverá imprimir o número mínimo de interruptores que devem ser
+    apertados.
+
+    Exemplos de entrada e saída:
+    Entrada	| Saída
+    0 0 1 1	| 1
+    0 0 0 1	| 2
+    Fonte: Adaptado de Olimpíada Brasileira de Informática (OBI)
+
+    => Exercício gentilmente cedido pelos profs. Jorge Cutigi e Adenilso Simão (ICMC/USP)
+ */
+public class Ex04 {
+    public static void main(String[] args) {
+        final Scanner scanner = new Scanner(System.in);
+        final int ia = scanner.nextInt();
+        final int ib = scanner.nextInt();
+        final int fa = scanner.nextInt();
+        final int fb = scanner.nextInt();
+
+        final Ex04 ex04 = new Ex04();
+        System.out.println(ex04.compute(ia, ib, fa, fb));
+    }
+
+    int compute(int ia, int ib, int fa, int fb) {
+        int minimo = 100000;
+        for (int c1 = 0; c1 <= 1; c1++) {
+            for (int c2 = 0; c2 <= 1; c2++) {
+                int a = ia;
+                int b = ib;
+
+                if (c1 == 1) {
+                    a = 1 - a;
+                }
+                if (c2 == 1) {
+                    a = 1 - a;
+                    b = 1 - b;
+                }
+                if (a == fa && b == fb) {
+                    minimo = Math.min(minimo, c1 + c2);
+                }
+            }
+        }
+        return minimo;
+    }
+}
